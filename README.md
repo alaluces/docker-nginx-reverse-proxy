@@ -10,7 +10,8 @@ mkdir ingress
 cd ingress
 git clone https://github.com/alaluces/Docker-Nginx-Ingress.git .
 ```
--Place your ssl cert files under files/ssl directory
+*Place your ssl cert files under files/ssl directory
+*Edit files/nginx/default_server.conf to set your routes/backends
 
 Build the docker image
 ```sh
@@ -29,6 +30,9 @@ docker exec -ti ingress /bin/bash
 
 If built successfully, it can be viewed on:
 ```sh
-http://localhost/admin
+http://localhost/
+or
+https://localhost/
 ```
+
 
