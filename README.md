@@ -1,7 +1,7 @@
 # Docker-Nginx-Ingress
-An NGINX front controller / reverse proxy / load balancer
+An NGINX front controller
 
-## INSTALLATION
+### INSTALLATION
 Install docker-ce
 
 Clone the project
@@ -10,9 +10,9 @@ mkdir ingress
 cd ingress
 git clone https://github.com/alaluces/Docker-Nginx-Ingress.git .
 ```
-*Place your ssl cert files under files/ssl directory*
 
-*Edit files/nginx/default_server.conf to set your routes/backends*
+Place your ssl cert files under files/ssl directory
+Edit files/nginx/default_server.conf to set your routes/backends
 
 Build the docker image
 ```sh
