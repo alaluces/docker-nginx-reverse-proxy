@@ -11,7 +11,7 @@ cd ingress
 git clone https://github.com/alaluces/Docker-Nginx-Ingress.git .
 ```
 
-Place your ssl cert files under files/ssl directory
+Place your ssl cert files under files/ssl directory 
 Edit files/nginx/default_server.conf to set your routes/backends
 
 Build the docker image
