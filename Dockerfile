@@ -1,13 +1,13 @@
-FROM nginx:1.15.5
+FROM nginx:1.15.6
 
 LABEL maintainer="alaluces"
 
-RUN  mkdir -p /etc/nginx/sites-available /etc/ssl/certs/custom 
+RUN  mkdir -p /etc/nginx/sites-enabled /etc/ssl/certs/custom 
 
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./files/nginx/default_server.conf /etc/nginx/sites-available/default.conf
-COPY ./files/nginx/http.conf /etc/nginx/sites-available/http.conf
+COPY ./files/nginx/default_server.conf /etc/nginx/sites-enabled/default.conf
+COPY ./files/nginx/http.conf /etc/nginx/sites-enabled/http.conf
 
 # SSL
 COPY ./files/ssl/ca.crt /etc/ssl/certs/custom/ca.crt
