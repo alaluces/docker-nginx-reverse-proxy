@@ -6,22 +6,56 @@ Install docker-ce
 
 Clone the project
 ```sh
-mkdir ingress
+git clone https://github.com/alaluces/Docker-Nginx-Ingress.git ingress
 cd ingress
-git clone https://github.com/alaluces/Docker-Nginx-Ingress.git .
 ```
-
-Place your ssl cert files under files/ssl directory\
-Edit files/nginx/default_server.conf to set your routes/backends
-
 Build the docker image
 ```sh
 docker build -t ingress .
 ```
 
+### RUN THE INGRESS WITH SSL / LETSENCRYPT
+Create a folder for the letsencrypt challenge file
+```sh
+mkdir /root/certbot/acme-challenge/
+```
+
 Run the image you built
 ```sh
-docker run -d --rm -p80:80 -p443:443 --name ingress ingress
+docker run -d --rm --name ingress  \
+-v /etc/letsencrypt/:/etc/letsencrypt/ \
+-v /root/certbot/acme-challenge/:/var/www/certbot/ \
+-v /root/ingress/files/nginx/nginx.conf:/etc/nginx/nginx.conf \
+-v /root/ingress/files/nginx/sites-enabled:/etc/nginx/sites-enabled/ \
+-p 80:80 -p 443:443 ingress
+```
+
+Generate letsencrypt cert for you domain
+```sh
+certbot certonly -d example.com -d www.example.com
+```
+
+select the option to place files in webroot directory (webroot)
+when asked for the webroot directory
+```sh
+/root/certbot/acme-challenge/
+```
+
+Take note of the directory where the cert files are generated and
+place it on the default.conf nginx file
+```sh
+vim /root/ingress/files/nginx/sites-enabled/default.conf
+```
+
+restart the ingress container
+```sh
+docker restart ingress
+```
+
+Automate the renewal process
+```sh
+0 0 * * 0 /usr/bin/certbot renew --webroot -w /root/certbot/acme-challenge/
+30 0 * * 0 /usr/bin/docker restart ingress
 ```
 
 SSH into the container
