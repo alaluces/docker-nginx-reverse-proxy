@@ -32,13 +32,7 @@ docker run -d --rm --name ingress  \
 
 Generate letsencrypt cert for you domain
 ```sh
-certbot certonly -d example.com -d www.example.com
-```
-
-select the option to place files in webroot directory (webroot)
-when asked for the webroot directory
-```sh
-/root/certbot/acme-challenge/
+certbot certonly -d example.com -d www.example.com --webroot -w /root/certbot/acme-challenge/
 ```
 
 Take note of the directory where the cert files are generated and
