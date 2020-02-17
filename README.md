@@ -1,12 +1,12 @@
-# Docker-Nginx-Ingress
-An NGINX front controller
+# docker-nginx-reverse-proxy
+A Docker based NGINX reverse proxy for static and dynamic web pages
 
 ### INSTALLATION
 Install docker-ce
 
 Clone the project
 ```sh
-git clone https://github.com/alaluces/Docker-Nginx-Ingress.git ingress
+git clone https://github.com/alaluces/docker-nginx-reverse-proxy.git ingress
 cd ingress
 ```
 Build the docker image
