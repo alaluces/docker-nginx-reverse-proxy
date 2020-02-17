@@ -14,6 +14,11 @@ Build the docker image
 docker build -t ingress .
 ```
 
+Create a folder for the webfiles
+```sh
+mkdir webfiles
+```
+
 ### RUN THE INGRESS WITH SSL / LETSENCRYPT
 
 Run the image you built
