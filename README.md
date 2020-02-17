@@ -15,30 +15,27 @@ docker build -t ingress .
 ```
 
 ### RUN THE INGRESS WITH SSL / LETSENCRYPT
-Create a folder for the letsencrypt challenge file
-```sh
-mkdir /root/certbot/acme-challenge/
-```
 
 Run the image you built
 ```sh
 docker run -d --rm --name ingress  \
 -v /etc/letsencrypt/:/etc/letsencrypt/ \
--v /root/certbot/acme-challenge/:/var/www/certbot/ \
--v /root/ingress/files/nginx/nginx.conf:/etc/nginx/nginx.conf \
--v /root/ingress/files/nginx/sites-enabled:/etc/nginx/sites-enabled/ \
+-v /root/webfiles/:/var/www/html/ \
+-v /root/ingress/certbot/:/var/www/certbot/ \
+-v /root/ingress/nginx/nginx.conf:/etc/nginx/nginx.conf \
+-v /root/ingress/nginx/sites-enabled:/etc/nginx/sites-enabled/ \
 -p 80:80 -p 443:443 ingress
 ```
 
 Generate letsencrypt cert for you domain
 ```sh
-certbot certonly -d example.com -d www.example.com --webroot -w /root/certbot/acme-challenge/
+certbot certonly -d example.com -d www.example.com --webroot -w /root/ingress/certbot/
 ```
 
 Take note of the directory where the cert files are generated and
 place it on the default.conf nginx file
 ```sh
-vim /root/ingress/files/nginx/sites-enabled/default.conf
+vim /root/ingress/files/sites-enabled/default.conf
 ```
 
 restart the ingress container
@@ -48,7 +45,7 @@ docker restart ingress
 
 Automate the renewal process
 ```sh
-0 0 * * 0 /usr/bin/certbot renew --webroot -w /root/certbot/acme-challenge/
+0 0 * * 0 /usr/bin/certbot renew --webroot -w /root/ingress/certbot/
 30 0 * * 0 /usr/bin/docker restart ingress
 ```
 
